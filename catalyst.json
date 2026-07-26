@@ -1,0 +1,101 @@
+{
+  "id": "ksp-crime-intelligence-platform",
+  "projectName": "KSP Crime Intelligence Platform",
+  "version": "1.0.0",
+  "region": "IN",
+  "services": {
+    "appSail": [
+      {
+        "name": "ksp-backend",
+        "type": "managed",
+        "runtime": "python-3.11",
+        "buildDir": "./backend",
+        "startCommand": "uvicorn app.main:app --host 0.0.0.0 --port 9000",
+        "port": 9000,
+        "env": {
+          "DATABASE_URL": "${CATALYST_DATASTORE_URL}",
+          "GEMINI_API_KEY": "${GEMINI_API_KEY}",
+          "JWT_SECRET": "${JWT_SECRET}",
+          "OLLAMA_URL": ""
+        },
+        "scaling": {
+          "minInstances": 1,
+          "maxInstances": 3,
+          "targetCPU": 70
+        }
+      }
+    ],
+    "slate": [
+      {
+        "name": "ksp-frontend",
+        "buildDir": "./frontend",
+        "buildCommand": "npm run build",
+        "outputDir": "./frontend/dist",
+        "indexFile": "index.html",
+        "env": {
+          "VITE_API_URL": "${CATALYST_BACKEND_URL}"
+        }
+      }
+    ],
+    "dataStore": {
+      "tables": [
+        "users",
+        "locations",
+        "firs",
+        "fir_accused",
+        "fir_victims",
+        "accused",
+        "victims",
+        "financial_transactions",
+        "district_indicators",
+        "historical_crime_stats",
+        "chat_sessions"
+      ]
+    },
+    "cron": [
+      {
+        "name": "crime-stats-aggregation",
+        "description": "Aggregates hourly crime stats into historical_crime_stats",
+        "schedule": "0 2 * * *",
+        "functionName": "aggregate_crime_stats"
+      },
+      {
+        "name": "habitual-offender-rescan",
+        "description": "Re-evaluates habitual offender flags for all accused",
+        "schedule": "0 3 * * 1",
+        "functionName": "rescan_habitual_flags"
+      }
+    ],
+    "signals": [
+      {
+        "name": "on-fir-insert",
+        "triggerTable": "firs",
+        "event": "INSERT",
+        "functionName": "notify_on_new_fir"
+      },
+      {
+        "name": "on-habitual-accused",
+        "triggerTable": "accused",
+        "event": "INSERT",
+        "functionName": "check_habitual_on_accused_insert"
+      }
+    ],
+    "authentication": {
+      "enabled": true,
+      "jwtExpiry": "8h",
+      "roles": ["Investigator", "Analyst", "Supervisor", "Policymaker"]
+    },
+    "apiGateway": {
+      "enabled": true,
+      "routes": [
+        { "path": "/auth/*", "target": "ksp-backend", "rateLimit": "60/min" },
+        { "path": "/chat/*", "target": "ksp-backend", "rateLimit": "30/min" },
+        { "path": "/analytics/*", "target": "ksp-backend", "rateLimit": "60/min" },
+        { "path": "/graph/*", "target": "ksp-backend", "rateLimit": "60/min" },
+        { "path": "/forecast/*", "target": "ksp-backend", "rateLimit": "30/min" },
+        { "path": "/decision-support/*", "target": "ksp-backend", "rateLimit": "30/min" },
+        { "path": "/warnings/*", "target": "ksp-backend", "rateLimit": "60/min" }
+      ]
+    }
+  }
+}

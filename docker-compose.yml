@@ -1,0 +1,55 @@
+version: '3.8'
+
+services:
+  db:
+    image: postgres:15
+    container_name: ksp_postgres
+    environment:
+      POSTGRES_USER: ksp_user
+      POSTGRES_PASSWORD: ksp_password
+      POSTGRES_DB: ksp_crime_db
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  graph_db:
+    image: neo4j:community
+    container_name: ksp_neo4j
+    ports:
+      - "7474:7474"
+      - "7687:7687"
+    environment:
+      NEO4J_AUTH: neo4j/password123
+    volumes:
+      - neo4j_data:/data
+
+  backend:
+    build: ./backend
+    container_name: ksp_backend
+    ports:
+      - "8000:8000"
+    environment:
+      - DATABASE_URL=postgresql://ksp_user:ksp_password@db:5432/ksp_crime_db
+      - NEO4J_URL=bolt://graph_db:7687
+      - OLLAMA_URL=http://host.docker.internal:11434
+      - JWT_SECRET=supersecretkspkey
+    depends_on:
+      - db
+      - graph_db
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+
+  frontend:
+    build: ./frontend
+    container_name: ksp_frontend
+    ports:
+      - "3000:3000"
+    environment:
+      - REACT_APP_API_URL=http://localhost:8000
+    depends_on:
+      - backend
+
+volumes:
+  postgres_data:
+  neo4j_data:
