@@ -20,7 +20,7 @@ print("Analytics:", os.path.exists(analytics_img))
 print("Network:", os.path.exists(network_img))
 print("Decision Support:", os.path.exists(decision_img))
 
-# Slide 1: Team Details
+# Slide 1: Team Details (EXACT DETAILS FROM HACK2SKILL DASHBOARD)
 s1 = prs.slides[0]
 for shape in s1.shapes:
     if shape.has_text_frame:
@@ -35,14 +35,15 @@ for shape in s1.shapes:
         
         details = [
             ("", ""),
-            ("Team Name: ", "Bunny4919 (Datathon Squad)"),
-            ("Team Leader Name: ", "Konat (Bunny4919)"),
-            ("Team Size: ", "1 Member / Multi-disciplinary Engineering Team"),
+            ("Team Name: ", "Team XSPARKS"),
+            ("Team Leader Name: ", "KONATHAM GNANESHWAR REDDY"),
+            ("Team Members: ", "KONATHAM GNANESHWAR REDDY (Leader), KONYALA SHANMUKHA SAI, Padala Sai Shashank"),
+            ("Team Size: ", "3 Members"),
             ("Problem Statement: ", "Intelligent Conversational AI and Crime Analytics Platform for Karnataka State Police (KSP) to discover hidden crime relationships, support investigative decision-making, and provide predictive/preventive intelligence grounded in criminology and sociological insights.")
         ]
         for label, val in details:
             p2 = tf.add_paragraph()
-            p2.font.size = Pt(14)
+            p2.font.size = Pt(13)
             run1 = p2.add_run()
             run1.text = label
             run1.font.bold = True
@@ -415,4 +416,4 @@ if os.path.exists(decision_img):
 # Save populated PowerPoint
 out_pptx = 'KSP_Datathon_2026_Final_Submission.pptx'
 prs.save(out_pptx)
-print("Saved final presentation with real live screenshots to:", out_pptx)
+print("Saved final presentation with official Team XSPARKS details to:", out_pptx)

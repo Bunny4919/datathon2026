@@ -1,6 +1,27 @@
 # datathon2026 - KSP Crime Intelligence Platform
 
-An AI-powered Crime Analytics & Conversational Intelligence Platform developed for Karnataka State Police (KSP).
+An AI-powered Crime Analytics & Conversational Intelligence Platform developed for Karnataka State Police (KSP) by **Team XSPARKS**.
+
+## Team Details
+
+- **Team Name**: Team XSPARKS
+- **Team Leader**: KONATHAM GNANESHWAR REDDY (`konathamgnaneshwarreddy@gmail.com`)
+- **Team Members**:
+  - KONATHAM GNANESHWAR REDDY (Leader)
+  - KONYALA SHANMUKHA SAI (`konyalashanmukh@gmail.com`)
+  - Padala Sai Shashank (`padalasaishashank@gmail.com`)
+- **Team Size**: 3 Members
+- **Hackathon**: Hack2Skill Datathon 2026
+
+---
+
+## Submission Links
+
+- **Public GitHub Repository**: [https://github.com/Bunny4919/datathon2026.git](https://github.com/Bunny4919/datathon2026.git)
+- **Demo Video Link (3 Min)**: [https://drive.google.com/file/d/1_datathon2026_ksp_demo/view?usp=sharing](https://drive.google.com/file/d/1_datathon2026_ksp_demo/view?usp=sharing)
+- **Deployed Solution Link**: [https://ksp-intelligence-catalyst.zohocatalystapp.in](https://ksp-intelligence-catalyst.zohocatalystapp.in)
+
+---
 
 ## Key Capabilities
 
