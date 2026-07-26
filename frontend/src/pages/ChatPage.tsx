@@ -120,7 +120,8 @@ const ChatPage = () => {
   };
 
   const handleExportPdf = () => {
-    window.open(`http://localhost:8000/chat/export-pdf?session_id=${sessionId}`);
+    const baseUrl = api.defaults.baseURL || 'http://localhost:8000';
+    window.open(`${baseUrl}/chat/export-pdf?session_id=${sessionId}`);
   };
 
   const triggerSampleQuery = (q: string) => {
