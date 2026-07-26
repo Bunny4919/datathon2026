@@ -7,37 +7,18 @@ import os
 
 prs = Presentation('KSP Datathon 2026 _ Prototype Submission Template.pptx')
 
-# Image paths
-brain_dir = os.path.dirname(os.path.abspath(__file__))
-dashboard_img = None
-arch_img = None
-network_img = None
+output_dir = r"C:\Users\konat\Desktop\ksp police"
 
-# Search for generated images in workspace or appdata
-for root, dirs, files in os.walk(r"C:\Users\konat\.gemini\antigravity\brain"):
-    for f in files:
-        if "ksp_dashboard_mockup" in f:
-            dashboard_img = os.path.join(root, f)
-        elif "ksp_architecture_diagram" in f:
-            arch_img = os.path.join(root, f)
-        elif "ksp_network_graph_mockup" in f:
-            network_img = os.path.join(root, f)
+chat_img = os.path.join(output_dir, "real_chat.png")
+analytics_img = os.path.join(output_dir, "real_analytics.png")
+network_img = os.path.join(output_dir, "real_network.png")
+decision_img = os.path.join(output_dir, "real_decision_support.png")
 
-print("Images found:")
-print("Dashboard:", dashboard_img)
-print("Arch:", arch_img)
-print("Network:", network_img)
-
-def add_text_to_shape(shape, text, font_size=14, bold=False, color=(30, 30, 30)):
-    if not shape.has_text_frame:
-        return
-    tf = shape.text_frame
-    tf.word_wrap = True
-    p = tf.paragraphs[0] if tf.paragraphs else tf.add_paragraph()
-    p.text = text
-    p.font.size = Pt(font_size)
-    p.font.bold = bold
-    p.font.color.rgb = RGBColor(*color)
+print("Real application screenshots:")
+print("Chat:", os.path.exists(chat_img))
+print("Analytics:", os.path.exists(analytics_img))
+print("Network:", os.path.exists(network_img))
+print("Decision Support:", os.path.exists(decision_img))
 
 # Slide 1: Team Details
 s1 = prs.slides[0]
@@ -187,35 +168,35 @@ for shape in s5.shapes:
             r2.font.size = Pt(11)
             r2.font.color.rgb = RGBColor(71, 85, 105)
 
-# Slide 6: Wireframes / Mock diagrams
+# Slide 6: Real Screenshot 1 - Chat & SQL Debugger Interface
 s6 = prs.slides[5]
 for shape in s6.shapes:
     if shape.has_text_frame and "Wireframes" in shape.text_frame.text:
         tf = shape.text_frame
         tf.clear()
         p0 = tf.paragraphs[0]
-        p0.text = "Solution Interface Wireframe & Dashboard Design"
+        p0.text = "Actual Prototype: Conversational AI & Real-Time SQL Debugger"
         p0.font.size = Pt(20)
         p0.font.bold = True
         p0.font.color.rgb = RGBColor(124, 58, 237)
 
-if dashboard_img and os.path.exists(dashboard_img):
-    s6.shapes.add_picture(dashboard_img, Inches(1), Inches(1.8), Inches(8), Inches(4.5))
+if os.path.exists(chat_img):
+    s6.shapes.add_picture(chat_img, Inches(0.8), Inches(1.8), Inches(8.4), Inches(4.7))
 
-# Slide 7: Architecture diagram
+# Slide 7: Real Screenshot 2 - Sociological & Hotspot Analytics
 s7 = prs.slides[6]
 for shape in s7.shapes:
     if shape.has_text_frame and "Architecture diagram" in shape.text_frame.text:
         tf = shape.text_frame
         tf.clear()
         p0 = tf.paragraphs[0]
-        p0.text = "Technical System Architecture Diagram"
+        p0.text = "Actual Prototype: Spatial Hotspot Analytics & Socio-Demographics"
         p0.font.size = Pt(20)
         p0.font.bold = True
         p0.font.color.rgb = RGBColor(124, 58, 237)
 
-if arch_img and os.path.exists(arch_img):
-    s7.shapes.add_picture(arch_img, Inches(1), Inches(1.8), Inches(8), Inches(4.5))
+if os.path.exists(analytics_img):
+    s7.shapes.add_picture(analytics_img, Inches(0.8), Inches(1.8), Inches(8.4), Inches(4.7))
 
 # Slide 8: Technologies
 s8 = prs.slides[7]
@@ -313,20 +294,20 @@ for shape in s10.shapes:
             r2.font.size = Pt(13)
             r2.font.color.rgb = RGBColor(124, 58, 237)
 
-# Slide 11: Snapshots of Prototype
+# Slide 11: Real Screenshot 3 - Criminal Network Graph Visualization
 s11 = prs.slides[10]
 for shape in s11.shapes:
     if shape.has_text_frame and "Snapshots" in shape.text_frame.text:
         tf = shape.text_frame
         tf.clear()
         p0 = tf.paragraphs[0]
-        p0.text = "Working Prototype Screenshots & Demonstrations"
+        p0.text = "Actual Prototype: Interactive Force-Directed Criminal Network Graph"
         p0.font.size = Pt(20)
         p0.font.bold = True
         p0.font.color.rgb = RGBColor(124, 58, 237)
 
-if network_img and os.path.exists(network_img):
-    s11.shapes.add_picture(network_img, Inches(1), Inches(1.8), Inches(8), Inches(4.5))
+if os.path.exists(network_img):
+    s11.shapes.add_picture(network_img, Inches(0.8), Inches(1.8), Inches(8.4), Inches(4.7))
 
 # Slide 12: Performance Report
 s12 = prs.slides[11]
@@ -416,30 +397,22 @@ for shape in s14.shapes:
             p.font.size = Pt(13)
             p.font.color.rgb = RGBColor(51, 65, 85)
 
-# Slide 15: Summary / Conclusion
+# Slide 15: Real Screenshot 4 - Investigator Decision Support
 s15 = prs.slides[14]
 for shape in s15.shapes:
     if shape.has_text_frame and "Blank slide" in shape.text_frame.text:
         tf = shape.text_frame
         tf.clear()
         p0 = tf.paragraphs[0]
-        p0.text = "Solution Summary & Impact"
+        p0.text = "Actual Prototype: Decision Support & Case Timelines"
         p0.font.size = Pt(20)
         p0.font.bold = True
         p0.font.color.rgb = RGBColor(124, 58, 237)
-        
-        sums = [
-            "• Production-Ready Deployment: Meets all 10 mandated KSP challenge requirements with high performance.",
-            "• Transformative Impact: Dramatically reduces investigation cycles from days to minutes.",
-            "• Enterprise Governance: Guarantees law enforcement data protection, role-based access, and auditability."
-        ]
-        for s in sums:
-            p = tf.add_paragraph()
-            p.text = s
-            p.font.size = Pt(13)
-            p.font.color.rgb = RGBColor(30, 41, 59)
+
+if os.path.exists(decision_img):
+    s15.shapes.add_picture(decision_img, Inches(0.8), Inches(1.8), Inches(8.4), Inches(4.7))
 
 # Save populated PowerPoint
 out_pptx = 'KSP_Datathon_2026_Final_Submission.pptx'
 prs.save(out_pptx)
-print("Saved final populated presentation to:", out_pptx)
+print("Saved final presentation with real live screenshots to:", out_pptx)
